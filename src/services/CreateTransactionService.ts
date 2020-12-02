@@ -26,7 +26,7 @@ class CreateTransactionService {
     const balance = await transactionsRepository.getBalance();
 
     if (type === 'outcome' && balance.total < value) {
-      throw new AppError('You cannot withdraw more than you have.', 403);
+      throw new AppError('You cannot withdraw more than you have.', 400);
     }
 
     const categoryExists = await categoriesRepository.findOne({
