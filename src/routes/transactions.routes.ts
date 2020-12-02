@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, TransactionRepository } from 'typeorm';
 
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import CreateTransactionService from '../services/CreateTransactionService';
@@ -39,7 +39,12 @@ transactionsRouter.post('/', async (req, res) => {
 });
 
 transactionsRouter.delete('/:id', async (req, res) => {
-  // TODO
+  const { id } = req.params;
+  const transactionsRepository = getCustomRepository(TransactionsRepository);
+
+  await transactionsRepository.delete({ id });
+
+  return res.status(204).send();
 });
 
 transactionsRouter.post('/import', async (req, res) => {
