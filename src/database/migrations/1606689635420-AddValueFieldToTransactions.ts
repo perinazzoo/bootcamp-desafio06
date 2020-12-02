@@ -7,7 +7,7 @@ export default class AddValueFieldToTransactions1606689635420
       'transactions',
       new TableColumn({
         name: 'value',
-        type: 'numeric',
+        type: 'real',
         isNullable: false,
       }),
     );
