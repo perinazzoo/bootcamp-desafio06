@@ -13,8 +13,6 @@ class TransactionsRepository extends Repository<Transaction> {
   public async getBalance(): Promise<Balance> {
     const transactions = await this.find();
 
-    console.log(transactions);
-
     const { income, outcome } = transactions.reduce(
       (acc: Omit<Balance, 'total'>, transaction: Transaction) => ({
         income:
@@ -28,8 +26,6 @@ class TransactionsRepository extends Repository<Transaction> {
       }),
       { income: 0, outcome: 0 },
     ) as Omit<Balance, 'total'>;
-
-    // console.log(income, outcome);
 
     const total = income - outcome;
 
