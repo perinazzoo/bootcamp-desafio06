@@ -9,7 +9,6 @@ import Category from '../models/Category';
 import TransactionRepository from '../repositories/TransactionsRepository';
 
 import uploadConfig from '../config/upload';
-import AppError from '../errors/AppError';
 
 interface Request {
   filename: string;
@@ -42,6 +41,7 @@ async function loadCSV(filePath: string): Promise<LoadCSV> {
   const categories: string[] = [];
 
   parseCSV.on('data', (line: string[]): void => {
+    if (!line) return;
     const cells = line.map(cell => cell.trim());
 
     const [title, type, value, category] = cells as [
@@ -52,7 +52,7 @@ async function loadCSV(filePath: string): Promise<LoadCSV> {
     ];
 
     if (!title || !type || !value) {
-      throw new AppError('The document is missing on data.', 400);
+      return;
     }
 
     categories.push(category);

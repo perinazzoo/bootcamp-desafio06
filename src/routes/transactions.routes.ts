@@ -17,6 +17,9 @@ transactionsRouter.get('/', async (req, res) => {
 
   const transactions = await transactionsRepository.find({
     relations: ['category'],
+    order: {
+      created_at: 'DESC',
+    },
   });
 
   const balance = await transactionsRepository.getBalance();
